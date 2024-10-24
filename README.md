@@ -8,7 +8,7 @@ It is derived from the excellent [pico-dirtyJtag](https://github.com/phdussud/pi
 A special shoutout goes to https://github.com/tom01h for crazily improving the
 performance of this project - thank you!
 
-The pinout is as follows:
+The pinout is as follows (it maches the pin names of the target device's JTAG port, in other word - you DON'T need to swap TDI and TDO pins like you would do with the interfaces like SPI or UART):
 
 | Pin name | GPIO   |
 |:---------|:-------|
@@ -25,15 +25,17 @@ the Pico are electrically compatible before connecting them.
 
 ![Full Pinout](./raspberry-pi-pico-gpio-pinout-diagram.png)
 
-Note: This project was tested with Vivado 2021.1, Raspberry Pi Pico as the JTAG
-programmer (XVC server), and EBAZ4205 'Development' FPGA Board in August 2021.
+### Compatibility tests
 
-Update: This project was tested with `Vivado ML Standard 2023.1`, Raspberry Pi
-Pico as the JTAG programmer (XVC server), and EBAZ4205 'Development' FPGA Board
-in May 2023.
+The project has been verified to be working with the following hardware and software combinations:
 
-Update (April-2024): The `xvc-pico-wifi` version was tested successfully with
-Vivado v2023.1 (64-bit).
+
+| Programmer Board    | Firmware      | Target                                  | Software                    | Date        |
+|---------------------|---------------|-----------------------------------------|-----------------------------|-------------|
+| Raspberry Pi Pico   | xvc-pico      | EBAZ4205 'Development' FPGA Board       | Vivado 2021.1               | August 2021 |
+| Raspberry Pi Pico   | xvc-pico      | EBAZ4205 'Development' FPGA Board       | Vivado ML Standard 2023.1   | May 2023    |
+| Raspberry Pi Pico W | xvc-pico-wifi | Unknown                                 | Vivado v2023.1 (64-bit)     | April 2024  |
+| Raspberry Pi Pico   | xvc-pico      | Coolrunner II XC2C64A (Matrix Glitcher) | Xilinx ISE 14.7 (Linux x64) | August 2024 |
 
 
 ### Building pico-xvc (for Linux users)
