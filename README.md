@@ -10,6 +10,8 @@ performance of this project - thank you!
 
 The pinout is as follows (it maches the pin names of the target device's JTAG port, in other word - you DON'T need to swap TDI and TDO pins like you would do with the interfaces like SPI or UART):
 
+In this branch, the pinout is modified so that the Pico can be directly mounted on the EBAZ4205 JTAG header. The JTAG header must only have the TDI/TDO/TCK/TMS and GND pins populated.
+
 | Pin name | GPIO   |
 |:---------|:-------|
 | TDI      | GPIO21 |
