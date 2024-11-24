@@ -6,7 +6,12 @@
 #include "tusb.h"
 #include "xvcPico.h"
 #include "jtag.h"
+
+#define ENABLE_AXM 0
+
+#if ENABLE_AXM
 #include "axm.h"
+#endif
 
 void __time_critical_func(core1_entry)() {
   while (1) {
@@ -34,7 +39,9 @@ void __time_critical_func(core1_entry)() {
 }
 
 buffer_info buffer_info_jtag;
+#if ENABLE_AXM
 buffer_info buffer_info_axm;
+#endif
 
 static cmd_buffer tx_buf;
 
@@ -53,6 +60,7 @@ void __time_critical_func(from_host_task)() {
     }
   }
 
+#if ENABLE_AXM
   if ((buffer_info_axm.busy == false)) {
     tud_task();
     if (tud_vendor_n_available(AXM_ITF)) {
@@ -63,6 +71,7 @@ void __time_critical_func(from_host_task)() {
       }
     }
   }
+#endif
 }
 
 void fetch_command() {
@@ -84,6 +93,10 @@ int main() {
   tusb_init();
 
   // JTAG init
+  gpio_set_function(tdi_gpio, GPIO_FUNC_SIO);
+  gpio_set_function(tdo_gpio, GPIO_FUNC_SIO);
+  gpio_set_function(tck_gpio, GPIO_FUNC_SIO);
+  gpio_set_function(tms_gpio, GPIO_FUNC_SIO);
   gpio_init(tdi_gpio);
   gpio_init(tdo_gpio);
   gpio_init(tck_gpio);
@@ -102,6 +115,7 @@ int main() {
   gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
   uart_set_fifo_enabled(UART_ID, true);
 
+#if ENABLE_AXM
   // pmod config
   gpio_init(PCK_PIN);
   gpio_init(PWRITE_PIN);
@@ -121,6 +135,7 @@ int main() {
   gpio_put(PWRITE_PIN, 0);
   gpio_put(PWD0_PIN, 0);
   gpio_put(PWD1_PIN, 0);
+#endif
 
   // LED config
   gpio_init(LED_PIN);
@@ -130,6 +145,8 @@ int main() {
   while (1) {
     from_host_task();
     fetch_command();
+#if ENABLE_AXM
     pmod_task();
+#endif
   }
 }
