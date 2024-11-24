@@ -12,10 +12,10 @@ The pinout is as follows (it maches the pin names of the target device's JTAG po
 
 | Pin name | GPIO   |
 |:---------|:-------|
-| TDI      | GPIO16 |
-| TDO      | GPIO17 |
-| TCK      | GPIO18 |
-| TMS      | GPIO19 |
+| TDI      | GPIO21 |
+| TDO      | GPIO20 |
+| TCK      | GPIO19 |
+| TMS      | GPIO18 |
 | GND      | Pin 23 |
 
 Note: The Raspberry Pico is a 3.3v device. Ensure that the target device and
